@@ -1,0 +1,18 @@
+[package]
+name = "charter-novice"
+description = "Reference implementation of the Steward's Charter `novice` invariant: a consequential action cannot proceed without a recorded fresh-eyes review; a novice's challenge is a refusal of dogma."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords = ["agent", "review", "quorum", "humility", "steward-charter"]
+
+[dependencies]
+charter-scar = { path = "../charter-scar" }
+charter-refusal = { path = "../charter-refusal" }
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
