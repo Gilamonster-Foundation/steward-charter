@@ -1,0 +1,17 @@
+[package]
+name = "charter-refusal"
+description = "Reference implementation of the Steward's Charter `refusal` invariant (the keystone): every consequential decision is declinable, and a refusal is a first-class act recorded into the scar."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords = ["agent", "ocap", "dissent", "audit", "steward-charter"]
+
+[dependencies]
+charter-scar = { path = "../charter-scar" }
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
