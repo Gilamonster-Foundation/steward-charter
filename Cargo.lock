@@ -45,6 +45,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9330f8b2ff13f34540b44e946ef35111825727b38d33286ef986142615121801"
 
 [[package]]
+name = "charter-refusal"
+version = "0.1.0"
+dependencies = [
+ "charter-scar",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "charter-scar"
 version = "0.1.0"
 dependencies = [
