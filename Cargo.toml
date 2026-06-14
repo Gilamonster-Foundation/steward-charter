@@ -5,7 +5,13 @@
 # first.
 [workspace]
 resolver = "2"
-members = ["charter-scar", "charter-refusal", "charter-novice", "charter-tether"]
+members = [
+    "charter-scar",
+    "charter-refusal",
+    "charter-novice",
+    "charter-tether",
+    "charter-reach",
+]
 
 [workspace.package]
 version = "0.1.0"

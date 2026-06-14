@@ -1,0 +1,16 @@
+[package]
+name = "charter-reach"
+description = "The Steward's Charter boundary condition (NOT a principle): the unencodable seam where human intent enters code that cannot code itself. Marks the gap; cannot fill it."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords = ["agent", "human-intent", "boundary", "humility", "steward-charter"]
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
