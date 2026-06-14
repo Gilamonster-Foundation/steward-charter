@@ -37,9 +37,11 @@ The Charter is doctrine **and** the canonical implementations of the invariants
 that don't already live elsewhere (`writ` lives in agent-mesh/agent-bridle,
 `provenance` in kyln). The homeless primitives get reference crates here.
 
-| Crate | Invariant | Status |
+| Crate | Invariant | What it gives you |
 |---|---|---|
-| [`charter-scar`](charter-scar) | `scar` | append-only, hash-chained record of metabolized failure (error + correction); refusals are recorded here too |
+| [`charter-scar`](charter-scar) | `scar` | append-only, hash-chained record of metabolized failure (error + correction) — the memory |
+| [`charter-refusal`](charter-refusal) | `refusal` | every decision declinable; a refusal records into the scar (the keystone, depends on `charter-scar`) |
+| [`charter-novice`](charter-novice) | `novice` | a consequential action can't proceed without a recorded fresh-eyes pass; a challenge is a refusal of dogma |
 
 ```rust
 use charter_scar::{Scar, ScarKind, ScarLog};
