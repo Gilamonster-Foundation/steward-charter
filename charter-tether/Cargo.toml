@@ -1,0 +1,18 @@
+[package]
+name = "charter-tether"
+description = "Reference implementation of the Steward's Charter `tether` invariant: a human-in-the-loop channel modulated by earned trust — it lengthens, but the high-stakes band is never severed."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords = ["agent", "human-in-the-loop", "trust", "governance", "steward-charter"]
+
+[dependencies]
+charter-scar = { path = "../charter-scar" }
+charter-refusal = { path = "../charter-refusal" }
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
