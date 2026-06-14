@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Pre-push gate for steward-charter.
+# PIPELINE PARITY: this hook mirrors .github/workflows/ci.yml (and `just check`).
+# When editing this file, update the pipeline + justfile to match.
+set -euo pipefail
+
+echo "pre-push: cargo fmt --check + clippy -D warnings + test"
+cargo fmt --check
+cargo clippy --all-targets -- -D warnings
+cargo test
+
+echo "pre-push: OK"
