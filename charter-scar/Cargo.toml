@@ -1,0 +1,16 @@
+[package]
+name = "charter-scar"
+description = "Reference implementation of the Steward's Charter `scar` invariant: an append-only, hash-chained record of metabolized failure (error + correction) — wisdom an agent can persist."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords = ["agent", "memory", "audit", "provenance", "steward-charter"]
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+blake3 = { workspace = true }
+thiserror = { workspace = true }

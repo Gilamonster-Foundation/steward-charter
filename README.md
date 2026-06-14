@@ -31,6 +31,25 @@ The full doctrine — systems spec, the six audit questions, the gnostic gloss, 
 where each primitive already lives in the tree — is in
 [`STEWARDS_CHARTER.md`](STEWARDS_CHARTER.md).
 
+## Reference implementations
+
+The Charter is doctrine **and** the canonical implementations of the invariants
+that don't already live elsewhere (`writ` lives in agent-mesh/agent-bridle,
+`provenance` in kyln). The homeless primitives get reference crates here.
+
+| Crate | Invariant | Status |
+|---|---|---|
+| [`charter-scar`](charter-scar) | `scar` | append-only, hash-chained record of metabolized failure (error + correction); refusals are recorded here too |
+
+```rust
+use charter_scar::{Scar, ScarKind, ScarLog};
+let mut log = ScarLog::new();
+let w = log.record(Scar::new(ScarKind::Mistake, "deploy on a Friday",
+                             "no rollback path", "two-hour outage"));
+log.heal(&w, "always land a rollback path first").unwrap(); // metabolized
+assert!(log.verify_chain());
+```
+
 ## How to cite it
 
 A repo adopts the Charter by pointing at it and naming which invariants it

@@ -1,0 +1,27 @@
+# The Steward's Charter is both doctrine (STEWARDS_CHARTER.md) and the reference
+# implementations of the invariants that don't already live elsewhere in the
+# tree. `writ` lives in agent-mesh/agent-bridle and `provenance` in kyln; the
+# homeless primitives get canonical reference crates here. `charter-scar` is the
+# first.
+[workspace]
+resolver = "2"
+members = ["charter-scar"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Gilamonster-Foundation/steward-charter"
+authors = ["Shawn Hartsock <hartsock@users.noreply.github.com>"]
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+blake3 = "1"
+thiserror = "2"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+strip = true

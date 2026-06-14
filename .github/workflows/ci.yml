@@ -1,0 +1,24 @@
+# CI for steward-charter.
+# HOOK PARITY: this pipeline is mirrored by .githooks/pre-push and `just check`.
+# When editing this file, update the push hook + justfile to match.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: rustup component add rustfmt clippy
+      - name: Format
+        run: cargo fmt --check
+      - name: Lint
+        run: cargo clippy --all-targets -- -D warnings
+      - name: Test
+        run: cargo test
