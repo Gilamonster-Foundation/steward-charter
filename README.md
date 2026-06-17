@@ -31,6 +31,10 @@ The full doctrine — systems spec, the six audit questions, the gnostic gloss, 
 where each primitive already lives in the tree — is in
 [`STEWARDS_CHARTER.md`](STEWARDS_CHARTER.md).
 
+**It has to earn its keep.** The Charter is only worth anything if removing it
+measurably degrades real outcomes. The falsification protocol — designed so the
+Charter can *lose* — is in [`docs/VALIDATION.md`](docs/VALIDATION.md).
+
 ## Reference implementations
 
 The Charter is doctrine **and** the canonical implementations of the invariants
