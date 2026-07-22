@@ -35,6 +35,13 @@ where each primitive already lives in the tree — is in
 measurably degrades real outcomes. The falsification protocol — designed so the
 Charter can *lose* — is in [`docs/VALIDATION.md`](docs/VALIDATION.md).
 
+**How the invariants get built.** The engineering doctrine of the line — the
+structural and craft laws that keep the *implementation* of the invariants
+legible, testable, and refusable — is the craft register in
+[`docs/CRAFT.md`](docs/CRAFT.md). Several craft laws are the mechanical face of
+an invariant: a regression test is a `scar`, a blocking quality gate is a
+`refusal`, a self-describing identifier is `provenance`.
+
 ## Reference implementations
 
 The Charter is doctrine **and** the canonical implementations of the invariants
