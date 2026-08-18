@@ -42,6 +42,13 @@ legible, testable, and refusable — is the craft register in
 an invariant: a regression test is a `scar`, a blocking quality gate is a
 `refusal`, a self-describing identifier is `provenance`.
 
+**How power is bounded.** The authority doctrine — how an agent's power is
+granted, attenuated, and later proven — is the authority register in
+[`docs/AUTHORITY.md`](docs/AUTHORITY.md). It is a sibling to the craft
+register: craft laws answer whether the code is buildable and legible,
+authority laws answer what an agent was permitted to do, who permitted it, and
+whether anyone can check afterwards.
+
 ## Reference implementations
 
 The Charter is doctrine **and** the canonical implementations of the invariants
