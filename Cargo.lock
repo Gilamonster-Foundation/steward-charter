@@ -72,6 +72,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "charter-register"
+version = "0.1.0"
+
+[[package]]
 name = "charter-scar"
 version = "0.1.0"
 dependencies = [

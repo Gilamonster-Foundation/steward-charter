@@ -1,0 +1,11 @@
+[package]
+name = "charter-register"
+description = "Machine-readable access to the line's doctrine registers, and the proofs that keep their law IDs stable."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]

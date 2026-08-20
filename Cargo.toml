@@ -6,6 +6,7 @@
 [workspace]
 resolver = "2"
 members = [
+    "charter-register",
     "charter-scar",
     "charter-refusal",
     "charter-novice",
