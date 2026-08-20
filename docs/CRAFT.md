@@ -1,5 +1,7 @@
 # The Craft Register — how the invariants get built
 
+**Version 1.0** · 14 laws, `CRAFT-01`–`CRAFT-14` · frozen 2026-08-20
+
 > The engineering doctrine of the line, in the same spirit as the Charter but a
 > different register. The Charter says **what the system must guarantee** to
 > stay non-Demiurgic. This says **how the code that implements those guarantees
@@ -18,27 +20,28 @@ identifier *is* `provenance`. Others are pure buildability with no safety
 invariant behind them, and the table says so honestly rather than forcing a
 link.
 
-| Law | One line | Serves |
-|---|---|---|
-| Loosely coupled, functionally cohesive | group by function, narrow seams | `novice` |
-| The three Cs | Composition · Configuration · Convention | `novice` |
-| Composition roots are manifests | the root wires, it does not implement | `novice` · `writ` |
-| Freeze minimally, ratchet forward | lock as little as possible | `refusal` · `provenance` |
-| Law minimalism | no law without a proof obligation | `refusal` |
-| Name properties, pin at the edge | laws name properties; identifiers self-describe | `provenance` |
-| TDD + the regression rule | a fix without a failing-first test is incomplete | `scar` |
-| Coverage, reported and near-total | ~100% on the production view, every PR | `novice` |
-| Tests separated from source | source is production-only | `novice` |
-| Least lines of code | delete surface rather than test it | `writ` · `refusal` |
-| Keep files small | split by cohesion past a soft cap | `novice` |
-| One issue, one PR, merge on green | small reviewable increments | `scar` · `novice` |
-| Zero warnings | the gate blocks on any warning | `refusal` |
-| Hooks mirror pipelines | local pre-flight = the authoritative gate | `tether` · `refusal` |
+| ID | Law | One line | Serves |
+|---|---|---|---|
+| `CRAFT-01` | Loosely coupled, functionally cohesive | group by function, narrow seams | `novice` |
+| `CRAFT-02` | The three Cs | Composition · Configuration · Convention | `novice` |
+| `CRAFT-03` | Composition roots are manifests | the root wires, it does not implement | `novice` · `writ` |
+| `CRAFT-04` | Freeze minimally, ratchet forward | lock as little as possible | `refusal` · `provenance` |
+| `CRAFT-05` | Law minimalism | no law without a proof obligation | `refusal` |
+| `CRAFT-06` | Name properties, pin at the edge | laws name properties; identifiers self-describe | `provenance` |
+| `CRAFT-07` | TDD + the regression rule | a fix without a failing-first test is incomplete | `scar` |
+| `CRAFT-08` | Coverage, reported and near-total | ~100% on the production view, every PR | `novice` |
+| `CRAFT-09` | Tests separated from source | source is production-only | `novice` |
+| `CRAFT-10` | Least lines of code | delete surface rather than test it | `writ` · `refusal` |
+| `CRAFT-11` | Keep files small | split by cohesion past a soft cap | `novice` |
+| `CRAFT-12` | One issue, one PR, merge on green | small reviewable increments | `scar` · `novice` |
+| `CRAFT-13` | Zero warnings | the gate blocks on any warning | `refusal` |
+| `CRAFT-14` | Hooks mirror pipelines | local pre-flight = the authoritative gate | `tether` · `refusal` |
 
 ---
 
 ## I. Structure — how the parts relate
 
+<a id="CRAFT-01"></a>
 ### Loosely coupled, functionally cohesive
 **Law.** Modules group by *function*, not by category; seams are narrow; a
 single logical change lands in a single cohesive place.
@@ -49,12 +52,14 @@ that changes together lives together.
 understand it without swallowing the whole tree — the precondition for the
 fresh-eyes challenge to be real rather than ornamental.
 
+<a id="CRAFT-02"></a>
 ### The three Cs — Composition, Configuration, Convention
 **Law.** Prefer composing small pieces over growing large ones; expose
 variation as configuration at the seam; lean on convention over ceremony.
 **Why.** The three give you flexibility without a framework: behavior is
 assembled, tuned, and defaulted rather than hard-wired.
 
+<a id="CRAFT-03"></a>
 ### Composition roots are manifests, not members
 **Law.** The file that wires a module tree together — a Rust `lib.rs` / `mod.rs`,
 a Python `__init__.py`, a JS/TS `index.ts` barrel, a Go package root — contains
@@ -77,6 +82,7 @@ least-privilege applied to the API).
 
 ## II. Freeze and law — what to lock, what to prove
 
+<a id="CRAFT-04"></a>
 ### Freeze minimally; ratchet forward
 **Law.** Lock down as little as possible per step. Even "current" pins are
 provisional and rotate via a forward ratchet, not a permanent freeze.
@@ -86,6 +92,7 @@ and cheaper to correct.
 later) **and `provenance`** (a self-describing artifact needs no frozen
 algorithm — the identifier already names its own scheme).
 
+<a id="CRAFT-05"></a>
 ### Law minimalism
 **Law.** Admit only the laws the system actually needs. Nothing enters the law
 layer without a **proof obligation**; the algebra tells you what to cut.
@@ -94,6 +101,7 @@ layer is where certainty ossifies.
 **Serves `refusal`.** A law that carries no proof obligation is dogma that
 cannot be challenged — exactly the thing the Novice must be able to question.
 
+<a id="CRAFT-06"></a>
 ### Name properties, pin implementations at the edge
 **Law.** Laws name *properties* (collision-resistance, determinism, ordering);
 *profiles* pin the algorithm; *identifiers self-describe* (a multihash, not a
@@ -107,6 +115,7 @@ its origin without an out-of-band assumption.
 
 ## III. Craft — how code earns trust
 
+<a id="CRAFT-07"></a>
 ### TDD, and every fix carries a regression test
 **Law.** Red before green. A bug fix is incomplete without a test that *would
 have failed before the fix* and passes after — verified against the old code
@@ -116,6 +125,7 @@ metabolized, not merely patched.
 **Serves `scar`.** A regression test *is* a scar in code: error plus correction,
 kept as first-class, permanent state so the same wound cannot silently reopen.
 
+<a id="CRAFT-08"></a>
 ### Coverage, reported and near-total
 **Law.** Every change reports its coverage; new modules target ~100% line and
 function coverage, measured on the **production view** (test files excluded so
@@ -124,6 +134,7 @@ may be waived — but named, not hidden.
 **Serves `novice`.** Coverage is the fresh-eyes defect-catch metric made
 mechanical: an uncovered line is a claim no one has challenged.
 
+<a id="CRAFT-09"></a>
 ### Tests separated from source
 **Law.** Source files carry production code only; test suites live beside them,
 not inside.
@@ -131,6 +142,7 @@ not inside.
 the source numbers) and the source legible.
 **Serves `novice`.**
 
+<a id="CRAFT-10"></a>
 ### Least lines of code
 **Law.** Delete unused surface rather than test it. No speculative API, no
 defensive assertion a law test already pins. Re-admit additively (a
@@ -138,6 +150,7 @@ defensive assertion a law test already pins. Re-admit additively (a
 **Serves `writ` and `refusal`.** Less surface is less to audit and less
 authority to leak; the smallest thing that does the job is the most declinable.
 
+<a id="CRAFT-11"></a>
 ### Keep files small
 **Law.** New source files stay under a soft cap (~2,500 lines); past it, split
 by cohesion.
@@ -149,6 +162,7 @@ challenge.
 
 ## IV. Flow — how change lands
 
+<a id="CRAFT-12"></a>
 ### One issue, one PR; merge on green
 **Law.** One logical change per branch; small, reviewable increments; each merge
 a checkpoint; no long-lived branches. Draft status is a hard stop — never merged
@@ -156,18 +170,63 @@ past.
 **Serves `scar`** (small increments localize failure so it can be metabolized)
 **and `novice`** (a diff a fresh reviewer can actually hold).
 
+<a id="CRAFT-13"></a>
 ### Zero warnings
 **Law.** The gate blocks on any warning — lints denied, formatting checked.
 **Why.** Warnings accumulate into noise, and noise is where real defects hide.
 **Serves `refusal`.** A quality gate that can decline is a refusal made
 mechanical.
 
+<a id="CRAFT-14"></a>
 ### Hooks mirror pipelines
 **Law.** The local pre-flight (push hook, `just check`) runs the *same* checks
 as the authoritative CI gate, and the two are kept in parity by rule — editing
 one triggers an audit of the others.
 **Serves `tether`** (a fast local pre-flight before the authoritative gate)
 **and `refusal`** (the gate itself).
+
+---
+
+## Identity, versioning, and how to cite
+
+Every law has a **stable ID** (`CRAFT-NN`). The ID is permanent: it is never
+renumbered, never reused for a different law, and survives rewording or
+reordering of the prose. A law's *text* may improve; its identity may not move.
+That is what makes a citation from another repository — or from a checkout two
+years old — resolvable.
+
+The heading anchors are additive. `#CRAFT-02` and the older name-derived
+anchor both resolve, so citations written before IDs existed keep working.
+
+**Cite the ID and the version.** A bare name is ambiguous once a law is
+reworded; a bare ID is unambiguous but does not say *which* wording you relied
+on:
+
+> per `CRAFT-02` (Craft Register v1.0)
+
+**Pin exactly when it matters.** For a decision record whose reasoning depends
+on the precise wording in force at the time, cite the release tag, which is
+immutable:
+
+> per `CRAFT-02`, `steward-charter@craft-v1.0`
+
+### What bumps the version
+
+| Change | Bump | Why |
+|---|---|---|
+| Wording, examples, formatting | PATCH | the obligation is unchanged |
+| A new law added | MINOR | existing citations stay valid |
+| A law's obligation narrowed, widened, or retired | MAJOR | a citation may no longer mean what it did |
+
+A retired law keeps its ID and its section, marked retired with the version
+that retired it. It is never deleted, because a citation to it must still
+resolve — retirement is information, and a dangling ID is not.
+
+### Versions
+
+| Version | Date | Change |
+|---|---|---|
+| 1.0 | 2026-08-20 | Stable IDs assigned to the existing laws. No law's obligation changed. |
 
 ---
 

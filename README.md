@@ -10,6 +10,20 @@ Demiurge?* — power without wisdom, certain of itself, self-destructively ignor
 You cannot construct wisdom. You can construct the conditions under which it
 stays **possible, refusable, and its absence survivable.** That is the Charter.
 
+## Citing the doctrine
+
+Every law in the two registers has a **stable ID** — `AUTH-01`–`AUTH-10` in the
+[Authority Register](docs/AUTHORITY.md), `CRAFT-01`–`CRAFT-14` in the
+[Craft Register](docs/CRAFT.md). An ID is permanent: never renumbered, never
+reused, and kept even when a law is retired, so a citation written today still
+resolves years from now. Cite the ID with the register version
+(`per AUTH-02, Authority Register v1.0`), or pin the release tag when the exact
+wording matters (`steward-charter@auth-v1.0`).
+
+That promise is machine-checked, not asserted: `charter-register` parses both
+registers and `cargo test` fails if an ID loses its anchor, gets renumbered, or
+drifts from the version header.
+
 ## The vocabulary (frozen 2026-06-14)
 
 ```
