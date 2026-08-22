@@ -249,6 +249,6 @@ mod tests {
     #[test]
     fn versions_are_declared() {
         assert_eq!(authority().version, "1.0");
-        assert_eq!(craft().version, "1.0");
+        assert_eq!(craft().version, "1.1");
     }
 }

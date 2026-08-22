@@ -1,6 +1,6 @@
 # The Craft Register — how the invariants get built
 
-**Version 1.0** · 14 laws, `CRAFT-01`–`CRAFT-14` · frozen 2026-08-20
+**Version 1.1** · 17 laws, `CRAFT-01`–`CRAFT-17` · frozen 2026-08-21
 
 > The engineering doctrine of the line, in the same spirit as the Charter but a
 > different register. The Charter says **what the system must guarantee** to
@@ -36,6 +36,9 @@ link.
 | `CRAFT-12` | One issue, one PR, merge on green | small reviewable increments | `scar` · `novice` |
 | `CRAFT-13` | Zero warnings | the gate blocks on any warning | `refusal` |
 | `CRAFT-14` | Hooks mirror pipelines | local pre-flight = the authoritative gate | `tether` · `refusal` |
+| `CRAFT-15` | Identity is derived, not assigned | the address is computed from the bytes | `provenance` |
+| `CRAFT-16` | History is tamper-evident and invertible | edits leave forensic evidence and carry an inverse | `provenance` · `scar` |
+| `CRAFT-17` | Evidence nobody reads is decoration | the verifier runs in production, or the chain is theatre | `refusal` · `provenance` |
 
 ---
 
@@ -111,8 +114,6 @@ the property survives the rotation.
 **Serves `provenance`.** An identifier that carries its own scheme resolves to
 its origin without an out-of-band assumption.
 
----
-
 ## III. Craft — how code earns trust
 
 <a id="CRAFT-07"></a>
@@ -187,6 +188,82 @@ one triggers an audit of the others.
 
 ---
 
+## V. Provenance — how data earns trust
+
+<a id="CRAFT-15"></a>
+
+### Identity is derived, not assigned
+**Law.** A thing's name is **computed from the thing**. Where an artifact,
+message, record, or span needs identity, that identity is a content address —
+`content-addressable`'s `ContentId` / `RawContentId` where the code can reach
+it, a self-describing multihash CID everywhere else. Sequence numbers, UUIDs,
+paths, and timestamps are *locators*; they may accompany an identity but they
+may never **be** one.
+**Why.** An assigned name is a claim by an authority, and it is only as good as
+that authority's memory and honesty. A derived name is a claim anyone can check
+against the bytes in front of them, with no trusted third party and no
+out-of-band agreement. Hand someone the bytes and the address and they can
+verify the pairing themselves — the proof travels *with* the data.
+**Serves `provenance`.** This is the invariant's mechanical face: an artifact
+that carries its own address needs no ledger to prove what it is.
+**Discharge.** Recompute the address from the bytes and compare. If a type
+cannot state how its address is derived, it does not have an identity yet.
+**Two failure modes this rules out.** *Bare digests* — a 32-byte hex string
+whose algorithm and codec live in a comment — and *vendored copies* of the
+addressing code, which drift and silently start minting different addresses for
+the same value.
+
+<a id="CRAFT-16"></a>
+
+### History is tamper-evident and invertible
+**Law.** Any structure that records what happened is **append-only and
+hash-linked**. History is not edited in place. Where the record must change,
+the change is itself a recorded event that (a) leaves **forensic evidence** —
+the prior state stays addressable and the mutation names what it shadowed — and
+(b) carries an **inverse** the runtime can apply to get back.
+**Why.** The two properties answer different questions. Tamper-evidence answers
+*"has this been changed?"* — detection. Invertibility answers *"can we get
+back?"* — recovery. A system with only the first can prove it was corrupted but
+not repair itself; one with only the second can undo damage it cannot detect.
+Neither alone is enough, and the pair is what separates a record from a mutable
+blob with good intentions.
+**Serves `provenance`** (the record resolves to its origin) **and `scar`** (a
+corruption that can be detected can be regression-tested).
+**Discharge.** Verify the chain, and exercise the inverse in a test that
+mutates, reverts, and asserts byte-equality with the pre-state.
+**Prior art to lift, not reinvent.** *Revertible effects* — every context
+transformation carrying a tracked inverse, composed so the property survives
+interleaving — are formalized in *A Programming Paradigm for Spatiotemporal
+Composability* (github.com/cordiverse/paper, draft 2026-08-13), the theory under
+the Cordis framework. Read it before designing an undo mechanism by hand.
+
+<a id="CRAFT-17"></a>
+
+### Evidence nobody reads is decoration
+**Law.** Writing integrity evidence is not the obligation; **checking it is.**
+Every hash chain, digest, signature, or attestation must have a **verifier on a
+production path**, and that verifier must be reachable from a caller that runs
+without a test harness. A verification function whose only callers are tests is
+an unmet obligation, not a feature.
+**Why.** This is `CRAFT-05` pointed at integrity. The cost of the chain is
+paid on every append; the benefit is realized only where something reads it back
+and *refuses*. In between, the chain buys nothing but the feeling of having one
+— which is worse than none, because it is cited as though it were protection.
+**Serves `refusal`** (evidence that cannot stop anything is not a gate) **and
+`provenance`**.
+**Discharge.** Grep for the verifier's call sites and require at least one
+outside `#[cfg(test)]`, `tests/`, and benches. Then delete the chain or wire the
+verifier — both are honest; the current state is not.
+**This has already happened here.** `newt-agent`'s
+`ConversationStore::verify_chain` is called by **every append and read by
+nothing in production** — tests and one offline bench script only — while
+restore feeds unverified turn rows straight into `restore_turns` (tracked as
+newt-agent#1785). The tamper evidence has been written on every turn, for
+months, and never once consulted. Assume this failure mode is the default, not
+the exception.
+
+---
+
 ## Identity, versioning, and how to cite
 
 Every law has a **stable ID** (`CRAFT-NN`). The ID is permanent: it is never
@@ -227,6 +304,7 @@ resolve — retirement is information, and a dangling ID is not.
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | 2026-08-20 | Stable IDs assigned to the existing laws. No law's obligation changed. |
+| 1.1 | 2026-08-21 | `CRAFT-15`–`CRAFT-17` added: derived identity, tamper-evident + invertible history, evidence-must-be-read. MINOR — existing citations unchanged. |
 
 ---
 
