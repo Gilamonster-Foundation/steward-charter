@@ -67,7 +67,7 @@ whether anyone can check afterwards.
 
 The Charter is doctrine **and** the canonical implementations of the invariants
 that don't already live elsewhere (`writ` lives in agent-mesh/agent-bridle,
-`provenance` in kyln). The homeless primitives get reference crates here.
+`provenance` in other work). The homeless primitives get reference crates here.
 
 | Crate | Invariant | What it gives you |
 |---|---|---|

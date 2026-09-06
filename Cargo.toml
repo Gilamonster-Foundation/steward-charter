@@ -1,6 +1,6 @@
 # The Steward's Charter is both doctrine (STEWARDS_CHARTER.md) and the reference
 # implementations of the invariants that don't already live elsewhere in the
-# tree. `writ` lives in agent-mesh/agent-bridle and `provenance` in kyln; the
+# tree. `writ` lives in agent-mesh/agent-bridle and `provenance` in other work; the
 # homeless primitives get canonical reference crates here. `charter-scar` is the
 # first.
 [workspace]
