@@ -138,7 +138,7 @@ trust.
 **Gloss.** Nothing is its own origin. The Demiurge's sin is believing he authored
 the place of life he had only forgotten. Provenance is the structural refusal to
 forget the source.
-**Lives.** `kyln` content-addressing; signed cert chains.
+**Lives.** Content-addressing in other work; signed cert chains.
 
 ### Interlocks
 The six are not silos. **Writ ↔ Refusal**: authority granted is authority that
