@@ -13,7 +13,7 @@ stays **possible, refusable, and its absence survivable.** That is the Charter.
 ## Citing the doctrine
 
 Every law in the two registers has a **stable ID** — `AUTH-01`–`AUTH-10` in the
-[Authority Register](docs/AUTHORITY.md), `CRAFT-01`–`CRAFT-14` in the
+[Authority Register](docs/AUTHORITY.md), `CRAFT-01`–`CRAFT-17` in the
 [Craft Register](docs/CRAFT.md). An ID is permanent: never renumbered, never
 reused, and kept even when a law is retired, so a citation written today still
 resolves years from now. Cite the ID with the register version
