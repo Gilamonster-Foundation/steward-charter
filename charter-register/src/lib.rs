@@ -227,6 +227,13 @@ mod tests {
 
         let craft = craft();
         assert_eq!(craft.law("CRAFT-05").unwrap().name, "Law minimalism");
+        // Cited by newt-agent's CLAUDE.md as its evidence discipline. Pinned
+        // because this law was drafted as `CRAFT-15` and renumbered when v1.1
+        // took that ID -- the exact silent redirect this test exists to catch.
+        assert_eq!(
+            craft.law("CRAFT-18").unwrap().name,
+            "Evidence proportional to surprise"
+        );
     }
 
     #[test]
@@ -249,6 +256,6 @@ mod tests {
     #[test]
     fn versions_are_declared() {
         assert_eq!(authority().version, "1.0");
-        assert_eq!(craft().version, "1.1");
+        assert_eq!(craft().version, "1.2");
     }
 }
