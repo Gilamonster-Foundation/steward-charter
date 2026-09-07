@@ -1,6 +1,6 @@
 # The Craft Register — how the invariants get built
 
-**Version 1.1** · 17 laws, `CRAFT-01`–`CRAFT-17` · frozen 2026-08-21
+**Version 1.2** · 18 laws, `CRAFT-01`–`CRAFT-18` · frozen 2026-08-21
 
 > The engineering doctrine of the line, in the same spirit as the Charter but a
 > different register. The Charter says **what the system must guarantee** to
@@ -39,6 +39,7 @@ link.
 | `CRAFT-15` | Identity is derived, not assigned | the address is computed from the bytes | `provenance` |
 | `CRAFT-16` | History is tamper-evident and invertible | edits leave forensic evidence and carry an inverse | `provenance` · `scar` |
 | `CRAFT-17` | Evidence nobody reads is decoration | the verifier runs in production, or the chain is theatre | `refusal` · `provenance` |
+| `CRAFT-18` | Evidence proportional to surprise | a claim names the decision it changes | `provenance` · `refusal` |
 
 ---
 
@@ -262,6 +263,42 @@ newt-agent#1785). The tamper evidence has been written on every turn, for
 months, and never once consulted. Assume this failure mode is the default, not
 the exception.
 
+<a id="CRAFT-18"></a>
+### Evidence proportional to surprise
+**Law.** A claim in a review artifact — a PR body, an ADR, a finding, a commit
+message — earns its place by **naming a decision that changes if it is false**.
+Evidence is carried in proportion to how *surprising* the claim is: an expected
+claim gets an assertion, a surprising one gets the receipt. Every figure is
+graded **measured** (it was run and the output can be shown), **derived** (it
+follows from something measured, and the step is shown), or **believed**
+(unverified). A claim that can name neither a decision nor a grade is cut.
+**Why.** Length is a proxy, and proxies are gamed. The failure this addresses
+is not a long document but a **flat** one: uniform evidence density across
+claims of wildly different value, which buries the one finding worth
+challenging under a hedge of findings nobody doubted. Flat density is the
+signature of performed rigor, and it is *cheaper* to produce than the real
+thing, so a review culture that rewards visible thoroughness will select for
+it. Grading makes the padding expensive: the writer must either mislabel —
+visible, and an offence against the gate — or write `believed` beside their own
+filler, which nobody does twice.
+**The proof obligation** (per [`CRAFT-05`](#CRAFT-05)): for each claim, the
+decision it changes and the grade of its warrant. Both are answerable at review
+time, by a human or an arbiter, without running anything.
+**Not a word budget.** Compression along no seam is worse than length — the
+same rule [`CRAFT-11`](#CRAFT-11) states for files. The fix direction is
+*removing unearned claims*, never *shortening earned ones*; a load-bearing
+justification deleted to hit a budget is a defect wearing the costume of
+concision, and therefore worse than the padding it replaced.
+**Kin to [`CRAFT-17`](#CRAFT-17), and not a duplicate of it.** That law governs
+*machine-checkable* evidence — a chain nobody verifies in production is
+decoration. This governs *prose* evidence — a claim no decision depends on is
+the same decoration in a register no verifier can reach. `CRAFT-17`'s discharge
+is a grep for call sites; this one's is a reader, which is why it is a rubric
+and not a gate.
+**Serves `provenance`** (a claim that self-describes its warrant is a claim you
+can audit) **and `refusal`** (a reader can only challenge what is legible as a
+claim; flat evidence hides the challengeable one).
+
 ---
 
 ## Identity, versioning, and how to cite
@@ -305,6 +342,7 @@ resolve — retirement is information, and a dangling ID is not.
 |---|---|---|
 | 1.0 | 2026-08-20 | Stable IDs assigned to the existing laws. No law's obligation changed. |
 | 1.1 | 2026-08-21 | `CRAFT-15`–`CRAFT-17` added: derived identity, tamper-evident + invertible history, evidence-must-be-read. MINOR — existing citations unchanged. |
+| 1.2 | 2026-09-07 | `CRAFT-18` added: evidence proportional to surprise. MINOR — existing citations unchanged. |
 
 ---
 
