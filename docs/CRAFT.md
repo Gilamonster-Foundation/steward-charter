@@ -1,6 +1,6 @@
 # The Craft Register — how the invariants get built
 
-**Version 1.2** · 18 laws, `CRAFT-01`–`CRAFT-18` · frozen 2026-08-21
+**Version 2.0** · 18 laws, `CRAFT-01`–`CRAFT-18` · frozen 2026-08-21
 
 > The engineering doctrine of the line, in the same spirit as the Charter but a
 > different register. The Charter says **what the system must guarantee** to
@@ -269,7 +269,7 @@ the exception.
 message — earns its place by **naming a decision that changes if it is false**.
 Evidence is carried in proportion to how *surprising* the claim is: an expected
 claim gets an assertion, a surprising one gets the receipt. Every figure is
-graded **measured** (it was run and the output can be shown), **derived** (it
+graded **measured** (it was run, and its output **is shown**), **derived** (it
 follows from something measured, and the step is shown), or **believed**
 (unverified). A claim that can name neither a decision nor a grade is cut.
 **Why.** Length is a proxy, and proxies are gamed. The failure this addresses
@@ -289,6 +289,16 @@ same rule [`CRAFT-11`](#CRAFT-11) states for files. The fix direction is
 *removing unearned claims*, never *shortening earned ones*; a load-bearing
 justification deleted to hit a budget is a defect wearing the costume of
 concision, and therefore worse than the padding it replaced.
+**Discharge.** For a `measured` figure the command and its output appear in the
+artifact, not a description of them. A figure whose output is merely
+*producible* is `believed` until it is produced. That gap is not pedantry: it is
+where a plausible number gets written before it is run. **This has already
+happened here.** The PR that introduced this law to `newt-agent` (#2208)
+published a grep, a result, and the phrase "verified before writing" in a single
+pass, none of it executed; the command as printed did not even run, and the real
+output contradicted it. The conclusion survived; the evidence did not. Nothing
+caught it but a reread, because no gate reads a PR body. Assume this failure
+mode is the default, not the exception.
 **Kin to [`CRAFT-17`](#CRAFT-17), and not a duplicate of it.** That law governs
 *machine-checkable* evidence — a chain nobody verifies in production is
 decoration. This governs *prose* evidence — a claim no decision depends on is
@@ -343,6 +353,7 @@ resolve — retirement is information, and a dangling ID is not.
 | 1.0 | 2026-08-20 | Stable IDs assigned to the existing laws. No law's obligation changed. |
 | 1.1 | 2026-08-21 | `CRAFT-15`–`CRAFT-17` added: derived identity, tamper-evident + invertible history, evidence-must-be-read. MINOR — existing citations unchanged. |
 | 1.2 | 2026-09-07 | `CRAFT-18` added: evidence proportional to surprise. MINOR — existing citations unchanged. |
+| 2.0 | 2026-09-07 | `CRAFT-18` narrowed: a `measured` figure's output **is shown**, not merely showable. MAJOR — a citation to v1.2 asked for less. |
 
 ---
 
