@@ -435,9 +435,10 @@ find its roots, and because getting the direction of descent right matters.
 
 **Doug McIlroy is the deep source.** *"Make each program do one thing well.
 Expect the output of every program to become the input to another."* These laws
-were worked out with that taken in early and applied for years — including in
-object-oriented design well before any of this was Rust. That transfer is the
-point: McIlroy's principles are not about pipes and text streams, they are
+were worked out with that taken in early and applied for years — through
+object-oriented design work that **predates the Rust language entirely**. The
+doctrine is not downstream of the material it is currently written in; the
+material changed and the doctrine did not. That is the point: McIlroy's principles are not about pipes and text streams, they are
 about **decomposition and composition**, and "program" scales to whatever the
 unit of assembly happens to be — an object, a module, a crate, a service, an
 agent. [`CRAFT-01`](#CRAFT-01), [`CRAFT-03`](#CRAFT-03) and
