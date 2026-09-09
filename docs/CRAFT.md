@@ -1,6 +1,6 @@
 # The Craft Register — how the invariants get built
 
-**Version 2.0** · 18 laws, `CRAFT-01`–`CRAFT-18` · frozen 2026-08-21
+**Version 2.1** · 21 laws, `CRAFT-01`–`CRAFT-21` · frozen 2026-09-09
 
 > The engineering doctrine of the line, in the same spirit as the Charter but a
 > different register. The Charter says **what the system must guarantee** to
@@ -40,6 +40,9 @@ link.
 | `CRAFT-16` | History is tamper-evident and invertible | edits leave forensic evidence and carry an inverse | `provenance` · `scar` |
 | `CRAFT-17` | Evidence nobody reads is decoration | the verifier runs in production, or the chain is theatre | `refusal` · `provenance` |
 | `CRAFT-18` | Evidence proportional to surprise | a claim names the decision it changes | `provenance` · `refusal` |
+| `CRAFT-19` | The ladder — reach for the least first | reuse before build; the rung you stop at is a decision | `refusal` · `novice` |
+| `CRAFT-20` | Output is another program's input | a fact reachable only through a UI is not reported | `provenance` · `novice` |
+| `CRAFT-21` | Silence unless surprising | noise is where real defects hide | `scar` · `refusal` |
 
 ---
 
@@ -149,6 +152,10 @@ the source numbers) and the source legible.
 **Law.** Delete unused surface rather than test it. No speculative API, no
 defensive assertion a law test already pins. Re-admit additively (a
 `#[non_exhaustive]` enum, a later export) the day a real consumer appears.
+**What this law does not reach** is enumerated in
+[`CRAFT-19`](#CRAFT-19) — unchanged obligation, stated where the procedure
+lives, because "unused surface" was never meant to include the code that makes
+the surface safe.
 **Serves `writ` and `refusal`.** Less surface is less to audit and less
 authority to leak; the smallest thing that does the job is the most declinable.
 
@@ -186,6 +193,69 @@ as the authoritative CI gate, and the two are kept in parity by rule — editing
 one triggers an audit of the others.
 **Serves `tether`** (a fast local pre-flight before the authoritative gate)
 **and `refusal`** (the gate itself).
+
+<a id="CRAFT-19"></a>
+### The ladder — reach for the least first
+**Law.** Before writing code, stop at the first rung that holds: (1) does this
+need to exist at all; (2) does this repository already do it; (3) does the
+standard library; (4) does the platform; (5) does a dependency already present;
+(6) is it one line; (7) only then, the minimum that works. **The rung you stop
+at is a decision and is stated** — "skipped, YAGNI" or "reused `X`" is an
+answer, and an unstated rung is an unexamined one.
+**Why.** [`CRAFT-10`](#CRAFT-10) names the outcome — least surface — but an
+outcome is not a procedure, and "write less" is advice nobody can follow under
+pressure. The ladder is the procedure, and its order is not arbitrary: each
+rung is cheaper to *carry* than the one below it, because the cost of code is
+paid at every future read, not at the moment it is typed.
+**The ladder never reaches these**, at any rung: validation at a trust
+boundary, error handling that prevents data loss, a security control, an
+accessibility affordance, or anything the requester asked for explicitly. They
+are not surface — they are the reason surface is safe to expose, and a line
+count cannot tell them apart from padding. The ladder removes what nothing
+depends on; it never removes what *failure* depends on. This states, where the
+procedure lives, a boundary [`CRAFT-10`](#CRAFT-10) always had: "unused
+surface" never meant these.
+
+**The ladder shortens the solution, never the reading.** It runs *after* the
+problem is understood — every seam the change touches, traced. The smallest
+diff in the wrong place is not economy, it is a second defect, and it is more
+expensive than the code it saved because it also spends the reviewer's trust.
+**Serves `refusal`** (the least thing is the most declinable) **and `novice`**
+(the fresh reader inherits rungs 1–6 as absence, which costs nothing to read).
+
+<a id="CRAFT-20"></a>
+### Output is another program's input
+**Law.** Anything worth reporting is emitted in a form a *second* program can
+consume — a structured event, a stream, a file — before it is rendered for a
+human. A dashboard, a TUI or a chat message is **a** consumer of that stream,
+never the only route to the fact.
+**Why.** A fact reachable only by looking at a rendering cannot be tested,
+diffed, archived, or replayed, so it cannot participate in
+[`CRAFT-16`](#CRAFT-16)'s tamper-evident history or
+[`CRAFT-17`](#CRAFT-17)'s verifier. It is not evidence; it is a picture of
+evidence. This is also what makes composition possible at all: a component
+whose output only a human can read has no downstream, and every later need
+becomes a modification of it rather than a new thing beside it.
+**Serves `provenance`** (a rendering has no chain) **and `novice`** (a stream
+can be read without running the UI that renders it).
+
+<a id="CRAFT-21"></a>
+### Silence unless surprising
+**Law.** When there is nothing surprising to report, report nothing. Success is
+quiet; a log line, a notification or an alert must name something the reader
+would act on.
+**Why.** The same argument as [`CRAFT-13`](#CRAFT-13): noise is where real
+defects hide. But the failure here is worse than in a build log, because a
+channel that cries routinely is not merely ignored — it is *muted*, and a muted
+channel keeps consuming the belief that something is watching. Coverage that
+exists and is not read is [`CRAFT-17`](#CRAFT-17)'s decoration wearing an
+operational costume.
+**The obligation runs both ways.** Silence must mean "nothing happened", never
+"the reporter died" — so absence of an expected signal is itself surprising,
+and must be detectable. A monitor that cannot distinguish a healthy system from
+a dead collector reports nothing in both cases and is honest in neither.
+**Serves `scar`** (a signal that survives being read) **and `refusal`** (a
+channel that stays worth interrupting for).
 
 ---
 
@@ -354,6 +424,44 @@ resolve — retirement is information, and a dangling ID is not.
 | 1.1 | 2026-08-21 | `CRAFT-15`–`CRAFT-17` added: derived identity, tamper-evident + invertible history, evidence-must-be-read. MINOR — existing citations unchanged. |
 | 1.2 | 2026-09-07 | `CRAFT-18` added: evidence proportional to surprise. MINOR — existing citations unchanged. |
 | 2.0 | 2026-09-07 | `CRAFT-18` narrowed: a `measured` figure's output **is shown**, not merely showable. MAJOR — a citation to v1.2 asked for less. |
+| 2.1 | 2026-09-09 | `CRAFT-19`–`CRAFT-21` added: the ladder, output-is-input, silence-unless-surprising. MINOR — existing citations unchanged. `CRAFT-10` gained a pointer to `CRAFT-19`'s boundary; its obligation is untouched, which is why this is not MAJOR. |
+
+---
+
+## Lineage — where this thinking comes from
+
+Stated because a reader who wants the reasoning behind a law should be able to
+find its roots, and because getting the direction of descent right matters.
+
+**Doug McIlroy is the deep source.** *"Make each program do one thing well.
+Expect the output of every program to become the input to another."* These laws
+were worked out with that taken in early and applied for years — including in
+object-oriented design well before any of this was Rust. That transfer is the
+point: McIlroy's principles are not about pipes and text streams, they are
+about **decomposition and composition**, and "program" scales to whatever the
+unit of assembly happens to be — an object, a module, a crate, a service, an
+agent. [`CRAFT-01`](#CRAFT-01), [`CRAFT-03`](#CRAFT-03) and
+[`CRAFT-20`](#CRAFT-20) are that idea at the units this line assembles.
+
+**Eric Raymond's rules are a sibling, not a source.** He read McIlroy deeply
+too and restated it at length; where a law here rhymes with one of his, both are
+downstream of the same ancestor rather than one citing the other. That
+independent arrival is worth more than a citation would be: two readings of the
+same source, applied in different decades to different materials, landing in the
+same place is evidence the source was right.
+
+**[ponytail](https://github.com/DietrichGebert/ponytail) is a separate lineage
+that converges.** It is agent-era — a discipline for how much code a *model*
+should write — and it reaches [`CRAFT-10`](#CRAFT-10)'s conclusion by a
+different road, along with the carve-out now stated in
+[`CRAFT-19`](#CRAFT-19). Convergence from an unrelated starting point is
+corroboration; it is not provenance, and this register does not descend from it.
+
+**None of the above authored these laws.** They are this line's own formulation,
+tested against this line's own scars. The genealogy is offered so the reasoning
+can be traced, not to lend borrowed authority — and where a law here departs
+from any of these sources, the law wins, because it is the one that has been
+falsified against real work.
 
 ---
 
