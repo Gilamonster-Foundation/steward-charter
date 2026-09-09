@@ -444,12 +444,18 @@ unit of assembly happens to be — an object, a module, a crate, a service, an
 agent. [`CRAFT-01`](#CRAFT-01), [`CRAFT-03`](#CRAFT-03) and
 [`CRAFT-20`](#CRAFT-20) are that idea at the units this line assembles.
 
-**Eric Raymond's rules are a sibling, not a source.** He read McIlroy deeply
-too and restated it at length; where a law here rhymes with one of his, both are
-downstream of the same ancestor rather than one citing the other. That
-independent arrival is worth more than a citation would be: two readings of the
-same source, applied in different decades to different materials, landing in the
-same place is evidence the source was right.
+**The transmission predates the web.** McIlroy reached this line's author
+before the internet was how one found things — through print and teaching, not
+a link — which fixes the chronology that the rest of this section depends on.
+
+**Eric Raymond's rules are a sibling, not a source.** *The Art of Unix
+Programming* (2003) is **later** than the absorption described above, so it
+cannot be an ancestor of these laws however much they rhyme; he read the same
+McIlroy deeply and restated it at length, and where a law here agrees with one
+of his, both are downstream of the same ancestor. That independent arrival is
+worth more than a citation would be: two readings of the same source, decades
+apart, applied to different materials, landing in the same place is evidence
+the source was right.
 
 **[ponytail](https://github.com/DietrichGebert/ponytail) is a separate lineage
 that converges.** It is agent-era — a discipline for how much code a *model*
