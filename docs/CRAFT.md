@@ -1,6 +1,6 @@
 # The Craft Register — how the invariants get built
 
-**Version 2.1** · 21 laws, `CRAFT-01`–`CRAFT-21` · frozen 2026-09-09
+**Version 3.0** · 21 laws, `CRAFT-01`–`CRAFT-21` · frozen 2026-09-30
 
 > The engineering doctrine of the line, in the same spirit as the Charter but a
 > different register. The Charter says **what the system must guarantee** to
@@ -35,7 +35,7 @@ link.
 | `CRAFT-11` | Keep files small | split by cohesion past a soft cap | `novice` |
 | `CRAFT-12` | One issue, one PR, merge on green | small reviewable increments | `scar` · `novice` |
 | `CRAFT-13` | Zero warnings | the gate blocks on any warning | `refusal` |
-| `CRAFT-14` | Hooks mirror pipelines | local pre-flight = the authoritative gate | `tether` · `refusal` |
+| `CRAFT-14` | Hooks pre-flight what changed | local pre-flight checks the changed scope fast; CI stays the authoritative full gate | `tether` · `refusal` |
 | `CRAFT-15` | Identity is derived, not assigned | the address is computed from the bytes | `provenance` |
 | `CRAFT-16` | History is tamper-evident and invertible | edits leave forensic evidence and carry an inverse | `provenance` · `scar` |
 | `CRAFT-17` | Evidence nobody reads is decoration | the verifier runs in production, or the chain is theatre | `refusal` · `provenance` |
@@ -186,13 +186,21 @@ past.
 **Serves `refusal`.** A quality gate that can decline is a refusal made
 mechanical.
 
-<a id="CRAFT-14"></a>
-### Hooks mirror pipelines
-**Law.** The local pre-flight (push hook, `just check`) runs the *same* checks
-as the authoritative CI gate, and the two are kept in parity by rule — editing
-one triggers an audit of the others.
-**Serves `tether`** (a fast local pre-flight before the authoritative gate)
-**and `refusal`** (the gate itself).
+<a id="CRAFT-14"></a><a id="hooks-mirror-pipelines"></a>
+### Hooks pre-flight what changed
+**Law.** The local pre-flight (push hook) runs the pipeline's *kinds* of check
+— format, lint, test — on the **changed scope only**: the files in the push,
+the crates or packages that own them, and everything that depends on them. A
+push that changes no code (a tag, a branch deletion, docs only) skips tests.
+The CI pipeline stays the **authoritative full gate** and nothing merges
+without it green. Expensive whole-tree checks (coverage floors, cross-target
+builds, MSRV, formal models, audits) run in CI, not in the hook. Editing either
+the hook or the pipeline still triggers an audit of the other: each check the
+pipeline runs is either scoped in the hook or named there as CI-only.
+**Why.** A hook that mirrors the whole pipeline takes as long as the pipeline;
+a gate that slow gets routed around, and a routed-around gate refuses nothing.
+**Serves `tether`** (a pre-flight fast enough to run every time) **and
+`refusal`** (the full gate, which still decides).
 
 <a id="CRAFT-19"></a>
 ### The ladder — reach for the least first
@@ -425,6 +433,7 @@ resolve — retirement is information, and a dangling ID is not.
 | 1.2 | 2026-09-07 | `CRAFT-18` added: evidence proportional to surprise. MINOR — existing citations unchanged. |
 | 2.0 | 2026-09-07 | `CRAFT-18` narrowed: a `measured` figure's output **is shown**, not merely showable. MAJOR — a citation to v1.2 asked for less. |
 | 2.1 | 2026-09-09 | `CRAFT-19`–`CRAFT-21` added: the ladder, output-is-input, silence-unless-surprising. MINOR — existing citations unchanged. `CRAFT-10` gained a pointer to `CRAFT-19`'s boundary; its obligation is untouched, which is why this is not MAJOR. |
+| 3.0 | 2026-09-30 | `CRAFT-14` narrowed: the push hook checks the **changed scope**, and CI alone is the full authoritative gate. MAJOR: a citation to v2.1 required full parity. |
 
 ---
 
